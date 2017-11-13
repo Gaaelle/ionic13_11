@@ -8,11 +8,13 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ChatAppProvider } from '../providers/chat-app/chat-app';
+import { ChatPage } from '../pages/chat/chat';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    ChatPage
   ],
   imports: [
     BrowserModule,
@@ -22,7 +24,8 @@ import { ChatAppProvider } from '../providers/chat-app/chat-app';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    ChatPage
   ],
   providers: [
     StatusBar,

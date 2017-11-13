@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 import { ChatAppProvider} from '../../providers/chat-app/chat-app';
 import User from '../../models/user.model';
+import { ChatPage } from '../chat/chat';
 
 @Component({
   selector: 'page-home',
@@ -33,6 +34,10 @@ export class HomePage {
       buttons: ['ok']
       }).present();
       }
+  }
+
+  goToChat() {
+    this.navCtrl.push(ChatPage);
   }
 
 }
