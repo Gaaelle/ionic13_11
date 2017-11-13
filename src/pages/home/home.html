@@ -7,8 +7,47 @@
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <h1>Les boutons</h1>
+  <button ion-button>Suivant</button>
+  <button ion-button color="danger">Supprimer</button>
+  <button ion-button color="danger" block>Supprimer</button>
+  <button ion-button color="danger" clear block>Supprimer</button>
+  <button ion-button color="dark" small block>Suivant</button>
+  <button ion-button color="dark" small block icon-left>
+    <ion-icon name="add-circle" color="danger"></ion-icon>
+      Ajouter un utilisateur
+  </button>
+
+  <h1>Ion cards</h1>
+  <ion-card>
+    <ion-card-header>
+      <h2>En-tête de ma zone</h2>
+    </ion-card-header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Lunar_eclipse_04-15-2014_by_R_Jay_GaBany.jpg" />
+    <ion-card-content>
+      <p>C'est la lune ! </p>
+      <button ion-button color="dark" small block icon-left>
+      Image suivante
+      </button>
+    </ion-card-content>
+  </ion-card>
+
+  <h1>Ion icons</h1>
+  <ion-icon class="ion-ios-nutrition"></ion-icon>                    <!-- active -->
+  <ion-icon class="ion-ios-game-controller-a" isActive="false"></ion-icon>  <!-- inactive  super doc ça fonctionne bien mdr-->
+
+  <h1>Ion list</h1>
+  <ion-list>
+    <ion-list-header>Mes contacts</ion-list-header>
+    <ion-card *ngFor="let user of users">
+      <ion-card-header>
+        <ion-icon name="contact">{{user.name}}</ion-icon>
+      </ion-card-header>
+      <ion-card-content>
+        <p><span>Email : </span><span>{{user.email}}</span></p>
+      </ion-card-content>
+      <button ion-button color="dark" small block>Editer</button>
+    </ion-card>
+  </ion-list>
+
 </ion-content>
