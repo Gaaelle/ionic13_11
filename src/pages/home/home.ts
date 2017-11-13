@@ -1,29 +1,28 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
+import { ChatAppProvider} from '../../providers/chat-app/chat-app';
+import User from '../../models/user.model';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  users: Array<Object>;
+  users: Array<User>;
   buffer: Array<Object>;
   searchType: 'name' | 'email' = 'name';
   searchValue: string = '';
 
-  constructor(public navCtrl: NavController, public alertModal: AlertController) {
-    this.users = new Array<Object>();
-
-    this.users.push({ name: "Nom", email: "email@email.com" });
-    this.users.push({ name: "moi", email: "moi@email.com" });
-    this.users.push({ name: "toi", email: "toi@email.com" });
-
-    this.buffer = this.users;
+  constructor(
+    public navCtrl: NavController,
+    public alertModal: AlertController,
+    public api: ChatAppProvider) {
+    this.users = api.getUsers();
 
   }
 
   search() {
-  this.users = this.buffer.filter( (user) => {
+  this.users = this.api.getUsers().filter( (user) => {
     let name = user[this.searchType].toLowerCase();
     return name.startsWith(this.searchValue);
     })
