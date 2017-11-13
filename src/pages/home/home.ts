@@ -7,6 +7,8 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
   users: Array<Object>;
+  searchType: 'name' | 'email' = 'name';
+  searchValue: string = '';
 
   constructor(public navCtrl: NavController) {
     this.users = new Array<Object>();
@@ -15,6 +17,13 @@ export class HomePage {
     this.users.push({ name: "moi", email: "moi@email.com" });
     this.users.push({ name: "toi", email: "toi@email.com" });
 
+  }
+
+  search() {
+  this.users = this.users.filter( (user) => {
+    let name = user[this.searchType].toLowerCase();
+    return name.startsWith(this.searchValue.toLowerCase());
+    })
   }
 
 }

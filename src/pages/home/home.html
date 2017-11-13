@@ -33,8 +33,12 @@
   </ion-card>
 
   <h1>Ion icons</h1>
-  <ion-icon class="ion-ios-nutrition"></ion-icon>                    <!-- active -->
-  <ion-icon class="ion-ios-game-controller-a" isActive="false"></ion-icon>  <!-- inactive  super doc ça fonctionne bien mdr-->
+  <ion-card>
+    <ion-card-content>
+      <ion-icon name="heart"></ion-icon>                    <!-- active -->
+      <ion-icon name="heart-outline"></ion-icon>  <!-- inactive  super doc ça fonctionne bien mdr-->
+    </ion-card-content>
+  </ion-card>
 
   <h1>Ion list</h1>
   <ion-list>
@@ -49,5 +53,22 @@
       <button ion-button color="dark" small block>Editer</button>
     </ion-card>
   </ion-list>
+  <ion-content padding>
+<h1>Mon application Ionic</h1>
+  <ion-item>
+    <ion-label floating>Rechercher</ion-label>
+    <ion-input type="text" [(ngModel)]="searchValue"></ion-input>
+  </ion-item>
+  <ion-list radio-group [(ngModel)]="searchType">
+    <ion-item>
+      <ion-label>Par nom</ion-label>
+      <ion-radio checked="true" value="name"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Par email</ion-label>
+      <ion-radio value="email"></ion-radio>
+    </ion-item>
+  </ion-list>
+  <button ion-button color="primary" block (click)="search()">Submit</button>
 
 </ion-content>
