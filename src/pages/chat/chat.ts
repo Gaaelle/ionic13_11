@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { User } from '../../models/user.model';
+import { Message } from '../../models/message.model';
+import { NgForm } from '@angular/forms';
+import { ChatAppProvider } from '../../providers/chat-app/chat-app';
+import { DatePipe } from '@angular/common';
 
 /**
  * Generated class for the ChatPage page.
@@ -14,12 +19,24 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'chat.html',
 })
 export class ChatPage {
+  user: User;
+  messages: Array<Message>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private api: ChatAppProvider) {
+
+    this.user = this.navParams.get('user');
+    this.messages = api.getMessages();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatPage');
+  }
+
+  sendMessage(msgForm: NgForm) {
+    let msg = new Message(msgForm.value.text, this.user);
+    this.api.saveMessages(msg);
   }
 
 }

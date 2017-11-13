@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import User from '../../models/user.model';
+import { User } from '../../models/user.model';
+import { Message } from '../../models/message.model';
 /*
   Generated class for the ChatAppProvider provider.
 
@@ -22,6 +23,18 @@ private users: Array<User>;
 
   getUsers(): Array<User> {
     return this.users;
+  }
+
+  saveMessages(msg: Message) {
+    console.log("sending message : ");
+    console.log(msg);
+  }
+
+  getMessages(): Array<Message> {
+    return [
+      new Message('text de test', new User("Name","Name@email.com")),
+      new Message('autre texte', new User("Moi", "moi@email.com"))
+    ]
   }
 
 }

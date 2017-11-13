@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 import { ChatAppProvider} from '../../providers/chat-app/chat-app';
-import User from '../../models/user.model';
+import { User } from '../../models/user.model';
 import { ChatPage } from '../chat/chat';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'page-home',
@@ -36,8 +37,9 @@ export class HomePage {
       }
   }
 
-  goToChat() {
-    this.navCtrl.push(ChatPage);
+  goToChat(form: NgForm) {
+    let user:User = new User(form.value.login, form.value.email);
+    this.navCtrl.push(ChatPage, {user: user});
   }
 
 }

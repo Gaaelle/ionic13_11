@@ -10,6 +10,12 @@ import { HomePage } from '../pages/home/home';
 import { ChatAppProvider } from '../providers/chat-app/chat-app';
 import { ChatPage } from '../pages/chat/chat';
 
+// Connetion to Firebase modules
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { firebaseConfig } from './firebase.conf';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -19,7 +25,10 @@ import { ChatPage } from '../pages/chat/chat';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpClientModule
+    HttpClientModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

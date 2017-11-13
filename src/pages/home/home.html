@@ -8,7 +8,50 @@
 
 <ion-content padding>
   <h1>Le chat !</h1>
-  <button ion-button color="primary" block (click)="goToChat()">Chatter</button>
+  <ion-card>
+    <form (ngSubmit)="goToChat(loginForm)" #loginForm="ngForm">
+      <ion-item>
+        <ion-label floating>Login</ion-label>
+        <ion-input type="text" name="login" ngModel></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" name="email" ngModel></ion-input>
+      </ion-item>
+      <button ion-button type="submit" block>Chatter</button>
+    </form>
+  </ion-card>
+
+  <h1>Filter</h1>
+    <ion-item>
+      <ion-label floating>Rechercher</ion-label>
+      <ion-input type="text" [(ngModel)]="searchValue"></ion-input>
+    </ion-item>
+    <ion-list radio-group [(ngModel)]="searchType">
+      <ion-item>
+        <ion-label>Par nom</ion-label>
+        <ion-radio checked="true" value="name"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Par email</ion-label>
+        <ion-radio value="email"></ion-radio>
+      </ion-item>
+    </ion-list>
+    <button ion-button color="primary" block (click)="search()">Submit</button>
+
+  <h1>Ion list</h1>
+  <ion-list>
+    <ion-list-header>Mes contacts</ion-list-header>
+    <ion-card *ngFor="let user of users">
+      <ion-card-header>
+        <ion-icon name="contact">{{user.name}}</ion-icon>
+      </ion-card-header>
+      <ion-card-content>
+        <p><span>Email : </span><span>{{user.email}}</span></p>
+      </ion-card-content>
+      <button ion-button color="dark" small block>Editer</button>
+    </ion-card>
+  </ion-list>
 
   <h1>Les boutons</h1>
   <button ion-button>Suivant</button>
@@ -42,38 +85,3 @@
       <ion-icon name="heart-outline"></ion-icon>  <!-- inactive  super doc ça fonctionne bien mdr-->
     </ion-card-content>
   </ion-card>
-
-  <h1>Filter</h1>
-    <ion-item>
-      <ion-label floating>Rechercher</ion-label>
-      <ion-input type="text" [(ngModel)]="searchValue"></ion-input>
-    </ion-item>
-    <ion-list radio-group [(ngModel)]="searchType">
-      <ion-item>
-        <ion-label>Par nom</ion-label>
-        <ion-radio checked="true" value="name"></ion-radio>
-      </ion-item>
-      <ion-item>
-        <ion-label>Par email</ion-label>
-        <ion-radio value="email"></ion-radio>
-      </ion-item>
-    </ion-list>
-    <button ion-button color="primary" block (click)="search()">Submit</button>
-
-  <h1>Ion list</h1>
-  <ion-list>
-    <ion-list-header>Mes contacts</ion-list-header>
-    <ion-card *ngFor="let user of users">
-      <ion-card-header>
-        <ion-icon name="contact">{{user.name}}</ion-icon>
-      </ion-card-header>
-      <ion-card-content>
-        <p><span>Email : </span><span>{{user.email}}</span></p>
-      </ion-card-content>
-      <button ion-button color="dark" small block>Editer</button>
-    </ion-card>
-  </ion-list>
-  <ion-content padding>
-
-
-</ion-content>
