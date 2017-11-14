@@ -27,7 +27,10 @@ export class ChatPage {
     private api: ChatAppProvider) {
 
     this.user = this.navParams.get('user');
-    this.messages = api.getMessages();
+    this.api.messagesSubscribe( (messages:Array<Message>) => {
+      this.messages = messages;
+    });
+    // this.messages = this.api.getMessages();
   }
 
   ionViewDidLoad() {
@@ -37,6 +40,7 @@ export class ChatPage {
   sendMessage(msgForm: NgForm) {
     let msg = new Message(msgForm.value.text, this.user);
     this.api.saveMessages(msg);
+    msgForm.reset(); // clear le champs pour écrire les messages
   }
 
 }

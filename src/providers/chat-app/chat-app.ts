@@ -3,6 +3,10 @@ import { Injectable } from '@angular/core';
 
 import { User } from '../../models/user.model';
 import { Message } from '../../models/message.model';
+
+import { AngularFireDatabase } from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 /*
   Generated class for the ChatAppProvider provider.
 
@@ -11,30 +15,62 @@ import { Message } from '../../models/message.model';
 */
 @Injectable()
 export class ChatAppProvider {
-private users: Array<User>;
+private obsMessages: Observable< Array<Message> >;
+private users: BehaviorSubject< Array<User> >;
+messages: Array<Object>;
 
-  constructor() {
-    this.users = [
+
+/*
+* Pour tout ce qui parle d'Observable ou "rxjs" cf la doc
+* http://reactivex.io/rxjs/
+*/
+  constructor(
+    public http: HttpClient,
+    private db: AngularFireDatabase) {
+
+    this.users = new BehaviorSubject([]);
+    [
       new User('Nom', 'nom@email.com'),
       new User('Moi', 'moi@email.com'),
       new User('Toi', 'toi@email.com'),
     ];
+
+    this.obsMessages = db.list('messages').valueChanges();
   }
 
   getUsers(): Array<User> {
-    return this.users;
+    return this.users.getValue();
   }
 
   saveMessages(msg: Message) {
+    this.db.list('messages').push(msg);
+
     console.log("sending message : ");
     console.log(msg);
   }
 
-  getMessages(): Array<Message> {
-    return [
-      new Message('text de test', new User("Name","Name@email.com")),
-      new Message('autre texte', new User("Moi", "moi@email.com"))
-    ]
+  messagesSubscribe( fct: (messages: Array<Message>) => void ) {
+    this.obsMessages.subscribe(fct);
   }
+  /* function supprimée et remplacée par un subscribe */
+  // getMessages(): Array<Message> {
+  //   return [
+  //     new Message('text de test', new User("Name","Name@email.com")),
+  //     new Message('autre texte', new User("Moi", "moi@email.com"))
+  //   ]
+  // }
+
+  connect(user: User){
+    // this.users.next(this.users.getValue().push(user));
+        //C'est sensé être la bonne synthaxe mais ça bug, sait pas pourquoi, du coup on a remplacé cette ligne par les 3 autres
+    const c_array: Array<User> = this.users.getValue();
+    c_array.push(user);
+    this.users.next( c_array );
+  }
+
+  listUserSubscribe( fct: (data: Array<User>) => void ) {
+    this.users.subscribe(fct);
+  }
+
 
 }

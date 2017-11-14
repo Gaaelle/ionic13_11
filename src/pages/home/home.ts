@@ -11,6 +11,7 @@ import { NgForm } from '@angular/forms';
 })
 export class HomePage {
   users: Array<User>;
+  nb_users: number;
   buffer: Array<Object>;
   searchType: 'name' | 'email' = 'name';
   searchValue: string = '';
@@ -19,8 +20,11 @@ export class HomePage {
     public navCtrl: NavController,
     public alertModal: AlertController,
     public api: ChatAppProvider) {
-    this.users = api.getUsers();
-
+      const that = this;
+      this.users = api.getUsers();
+      api.listUserSubscribe( function(users){
+        that.nb_users = users.length;
+      });
   }
 
   search() {
@@ -37,8 +41,13 @@ export class HomePage {
       }
   }
 
+  register(form: NgForm) {
+    let user: User = new User(form.value.login, form.value.email);
+    this.api.connect(user);
+  }
+
   goToChat(form: NgForm) {
-    let user:User = new User(form.value.login, form.value.email);
+    let user: User = new User(form.value.login, form.value.email);
     this.navCtrl.push(ChatPage, {user: user});
   }
 

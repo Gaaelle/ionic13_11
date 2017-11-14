@@ -1,12 +1,27 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Mon appli chat
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+  <h1>Sign up</h1>
+  <ion-card>
+    <form (ngSubmit)="register(loginForm)" #loginForm="ngForm">
+      <ion-item>
+        <ion-label floating>Login</ion-label>
+        <ion-input type="text" name="login" ngModel></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" name="email" ngModel></ion-input>
+      </ion-item>
+      <button ion-button type="submit" block>Sign up !</button>
+    </form>
+  </ion-card>
+
   <h1>Le chat !</h1>
   <ion-card>
     <form (ngSubmit)="goToChat(loginForm)" #loginForm="ngForm">
@@ -39,9 +54,9 @@
     </ion-list>
     <button ion-button color="primary" block (click)="search()">Submit</button>
 
-  <h1>Ion list</h1>
+  <h1>Liste de contacts</h1>
   <ion-list>
-    <ion-list-header>Mes contacts</ion-list-header>
+    <ion-list-header>Mes contacts {{ users.length }}</ion-list-header>
     <ion-card *ngFor="let user of users">
       <ion-card-header>
         <ion-icon name="contact">{{user.name}}</ion-icon>
