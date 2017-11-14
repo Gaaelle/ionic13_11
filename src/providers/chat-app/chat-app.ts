@@ -74,5 +74,8 @@ messages: Array<Object>;
     this.users.subscribe(fct);
   }
 
+  getUsers(): Array<User> {
+    return this.users.getValue();
+  }
 
 }

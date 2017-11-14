@@ -15,6 +15,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { firebaseConfig } from './firebase.conf';
+import { Camera } from '@ionic-native/camera';
+import { CameraProvider } from '../providers/camera/camera';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { firebaseConfig } from './firebase.conf';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ChatAppProvider,
-    HttpClient
+    HttpClient,
+    Camera,
+    CameraProvider
   ]
 })
 export class AppModule {}
