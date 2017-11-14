@@ -28,18 +28,18 @@ messages: Array<Object>;
     public http: HttpClient,
     private db: AngularFireDatabase) {
 
+    const that = this;
     this.users = new BehaviorSubject([]);
-    [
-      new User('Nom', 'nom@email.com'),
-      new User('Moi', 'moi@email.com'),
-      new User('Toi', 'toi@email.com'),
-    ];
+    db.list('users').valueChanges().subscribe((users: Array<User>) => {
+      that.users.next(users);
+    });
+    // [
+    //   new User('Nom', 'nom@email.com'),
+    //   new User('Moi', 'moi@email.com'),
+    //   new User('Toi', 'toi@email.com'),
+    // ];
 
     this.obsMessages = db.list('messages').valueChanges();
-  }
-
-  getUsers(): Array<User> {
-    return this.users.getValue();
   }
 
   saveMessages(msg: Message) {
@@ -63,9 +63,11 @@ messages: Array<Object>;
   connect(user: User){
     // this.users.next(this.users.getValue().push(user));
         //C'est sensé être la bonne synthaxe mais ça bug, sait pas pourquoi, du coup on a remplacé cette ligne par les 3 autres
-    const c_array: Array<User> = this.users.getValue();
-    c_array.push(user);
-    this.users.next( c_array );
+    // const c_array: Array<User> = this.users.getValue();
+    // c_array.push(user);
+    // this.users.next( c_array );
+        // Suite à des améliorations j'ai du changer pleins de trucs
+    this.db.list('users').push( user );
   }
 
   listUserSubscribe( fct: (data: Array<User>) => void ) {

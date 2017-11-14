@@ -21,9 +21,11 @@ export class HomePage {
     public alertModal: AlertController,
     public api: ChatAppProvider) {
       const that = this;
-      this.users = api.getUsers();
+
       api.listUserSubscribe( function(users){
-        that.nb_users = users.length;
+        console.log('New Users list');
+        console.log(users)
+        that.users = users;
       });
   }
 
@@ -49,6 +51,7 @@ export class HomePage {
   goToChat(form: NgForm) {
     let user: User = new User(form.value.login, form.value.email);
     this.navCtrl.push(ChatPage, {user: user});
+    this.api.connect(user);
   }
 
 }

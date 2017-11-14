@@ -21,16 +21,20 @@ import { DatePipe } from '@angular/common';
 export class ChatPage {
   user: User;
   messages: Array<Message>;
+  users: Array<User>;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private api: ChatAppProvider) {
 
+    const that = this;
     this.user = this.navParams.get('user');
     this.api.messagesSubscribe( (messages:Array<Message>) => {
-      this.messages = messages;
+      that.messages = messages;
     });
-    // this.messages = this.api.getMessages();
+    this.api.listUserSubscribe((user: Array<User>) => {
+      this.users = user;
+    });
   }
 
   ionViewDidLoad() {
