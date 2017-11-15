@@ -5,7 +5,7 @@ import { Message } from '../../models/message.model';
 import { NgForm } from '@angular/forms';
 import { ChatAppProvider } from '../../providers/chat-app/chat-app';
 import { DatePipe } from '@angular/common';
-import { CameraProxy } from '../../providers/camera/camera';
+import { CameraProxyProvider } from '../../providers/camera/camera';
 
 /**
  * Generated class for the ChatPage page.
@@ -23,11 +23,12 @@ export class ChatPage {
   user: User;
   messages: Array<Message>;
   users: Array<User>;
+  msg: Message;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private api: ChatAppProvider,
-    private camera: CameraProxy) {
+    private camera: CameraProxyProvider) {
 
     const that = this;
     this.user = this.navParams.get('user');
@@ -37,6 +38,7 @@ export class ChatPage {
     this.api.listUserSubscribe((user: Array<User>) => {
       this.users = user;
     });
+    this.msg = new Message('', this.user);
   }
 
   ionViewDidLoad() {
@@ -44,15 +46,17 @@ export class ChatPage {
   }
 
   sendMessage(msgForm: NgForm) {
-    let msg = new Message(msgForm.value.text, this.user);
-    this.api.saveMessages(msg);
+    this.msg.text = msgForm.value.text;
+    this.api.saveMessages(this.msg);
     msgForm.reset(); // clear le champs pour écrire les messages
+    this.msg = new Message('', this.user);
   }
 
   takePicture() {
     this.camera.getPicture()
-    .then(() => {
-      console.log("OK");
+    .then((image) => {
+      this.msg.image = 'data:image/jpeg;base64,' + image;
+      console.log(image);
     }).catch((err) => {
       console.log(err);
     });

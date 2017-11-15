@@ -7,6 +7,5 @@ export class Message {
 
   constructor(public text:string, public user: User) {
     this.date = Date.now();
-
   }
 }

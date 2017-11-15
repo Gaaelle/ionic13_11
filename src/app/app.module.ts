@@ -16,7 +16,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { firebaseConfig } from './firebase.conf';
 import { Camera } from '@ionic-native/camera';
-import { CameraProvider } from '../providers/camera/camera';
+import { CameraProxyProvider } from '../providers/camera/camera';
 
 @NgModule({
   declarations: [
@@ -45,7 +45,7 @@ import { CameraProvider } from '../providers/camera/camera';
     ChatAppProvider,
     HttpClient,
     Camera,
-    CameraProvider
+    CameraProxyProvider
   ]
 })
 export class AppModule {}

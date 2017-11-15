@@ -8,7 +8,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 */
 
 @Injectable()
-export class CameraProxy extends Camera {
+export class CameraProxyProvider extends Camera {
   constructor() {
     super()
   }
@@ -19,6 +19,6 @@ export class CameraProxy extends Camera {
       encodingType: this.EncodingType.JPEG,
       mediaType: this.MediaType.PICTURE
     }
-    return super.getPicture(defaultOptions);
+    return super.getPicture(options || defaultOptions);
   }
 }
